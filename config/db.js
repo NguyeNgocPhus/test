@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
-
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
 const connectDB = async () => {
   const conn = await mongoose.connect(
-    process.env.MONGO_URI,
+    `${process.env.MONGO_URL}`,
       {
       useNewUrlParser: true,
-      useCreateIndex: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false
+      useFindAndModify:false,
+      useCreateIndex:true,
+      useUnifiedTopology: true
       }
     );
 

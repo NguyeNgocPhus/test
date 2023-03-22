@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodbbb
+    ports:
+      - "7777:27017"
+
+  backend:
+    image: nodejs:${version}
+    container_name: nodejs-${version}
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8000"
+    environment:
+      - NODE_ENV=${env}
+networks:
+  default:
+    external: true
+    name: testne

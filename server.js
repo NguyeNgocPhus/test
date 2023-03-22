@@ -8,21 +8,17 @@ const xss = require('xss-clean');
 const rateLimit = require("express-rate-limit");
 const hpp = require('hpp');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const logger = require('./middlewares/logger');
 const errorHandle = require('./middlewares/error');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
 
-dotenv.config({ path: './config/config.env'});
+require('dotenv').config()
 
 connectDB();
 
-const bootcamps = require('./routes/bootcamps');
-const courses = require('./routes/courses');
 const auth = require('./routes/auth');
-const users = require('./routes/users');
-const reviews = require('./routes/reviews');
+
 
 const app = express();
 
@@ -67,19 +63,17 @@ app.get('/', (req, res) => {
   res.send('Init project');
 });
 
-app.use('/api/v1/bootcamps', bootcamps);
-app.use('/api/v1/courses', courses);
+
 app.use('/api/v1/auth', auth);
-app.use('/api/v1/users', users);
-app.use('/api/v1/reviews', reviews);
+
 
 app.use(errorHandle);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 const server = app.listen(
   PORT, 
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+  console.log(`Server running in ${PORT} mode on port ${PORT}`)
 );
 
 //Handle unhandle promise rejections
